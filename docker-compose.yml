@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: planazo-db
+    restart: always
+    environment:
+      POSTGRES_DB: desafio_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - ./backend/db:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d desafio_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: on-failure
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: desafio_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+      APP_PORT: 3000
+      JWT_SECRET: planazo_secret_key
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - shared_uploads:/app/uploads
+    networks:
+      - frontend-network
+      - backend-network
+
+  nginx:
+    build: ./frontend
+    container_name: planazo-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    driver: bridge
+  backend-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
