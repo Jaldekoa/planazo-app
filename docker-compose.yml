@@ -38,6 +38,12 @@ services:
       - frontend-network
       - backend-network
 
+  chatbot:
+    build: ./chatbot
+    restart: on-failure
+    networks:
+      - backend-network
+
   nginx:
     build: ./frontend
     container_name: planazo-nginx
@@ -56,3 +62,4 @@ networks:
 
 volumes:
   postgres_data:
+  shared_uploads:
