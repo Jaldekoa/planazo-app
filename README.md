@@ -13,7 +13,7 @@
 
 ## ¿Qué es Planazo?
 
-Planazo es una aplicación web social que conecta a personas con actividades de ocio cercanas. Los usuarios pueden **descubrir negocios y actividades**, **crear grupos de amigos**, **proponer planes** y **votar colectivamente** cuál hacer todo en un mismo sitio.
+Planazo es una aplicación web que conecta a personas con actividades de ocio cercanas. Los usuarios pueden **descubrir negocios y actividades**, **crear grupos de amigos**, **proponer planes** y **votar colectivamente**. Haciendo todo en un mismo sitio.
 
 ---
 
